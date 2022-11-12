@@ -21,6 +21,7 @@ set(HEADER_LIST
 	${INCLUDE_DIR}/dc_env/env.h
     )
 
+include_directories(${INCLUDE_DIR})
 include(CheckCCompilerFlag)
 
 function(AddCompileOptions)
