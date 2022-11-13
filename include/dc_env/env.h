@@ -45,6 +45,14 @@ struct dc_env *dc_env_create(struct dc_error *err, bool zero_free, dc_env_tracer
 
 /**
  *
+ * @param err
+ * @param env
+ * @return
+ */
+struct dc_env *dc_env_dup(struct dc_error *err, const struct dc_env *env);
+
+/**
+ *
  * @param env
  * @return
  */

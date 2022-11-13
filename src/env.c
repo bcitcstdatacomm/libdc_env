@@ -18,7 +18,6 @@
 #include "dc_env/env.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 
 static void dc_env_init(struct dc_env *env, bool zero_free, dc_env_tracer tracer);
@@ -47,6 +46,24 @@ struct dc_env *dc_env_create(struct dc_error *err, bool zero_free, dc_env_tracer
     }
 
     return env;
+}
+
+struct dc_env *dc_env_dup(struct dc_error *err, const struct dc_env *env)
+{
+    struct dc_env *new_env;
+
+    new_env = malloc(sizeof(struct dc_env));  // NOLINT(clang-analyzer-unix.Malloc)
+
+    if(new_env == NULL)
+    {
+        DC_ERROR_RAISE_ERRNO(err, errno);
+    }
+    else
+    {
+        dc_env_init(new_env, env->zero_free, env->tracer);
+    }
+
+    return new_env;
 }
 
 static void dc_env_init(struct dc_env *env, bool zero_free, dc_env_tracer tracer)
