@@ -192,7 +192,18 @@ find_library(LIBDC_ERROR dc_error REQUIRED)
 
 target_link_libraries(dc_env PUBLIC ${LIBDC_ERROR})
 
-install(TARGETS dc_env LIBRARY DESTINATION lib)
+get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
+
+if ("${LIB64}" STREQUAL "TRUE")
+    set(LIBSUFFIX 64)
+else()
+    set(LIBSUFFIX "")
+endif()
+
+set(INSTALL_LIB_DIR lib${LIBSUFFIX} CACHE PATH "Installation directory for libraries")
+mark_as_advanced(INSTALL_LIB_DIR)
+
+install(TARGETS dc_env LIBRARY DESTINATION ${INSTALL_LIB_DIR})
 install(FILES ${HEADER_LIST} DESTINATION include/dc_env)
 
 add_dependencies(dc_env doxygen)
