@@ -188,10 +188,6 @@ set_target_properties(dc_env PROPERTIES
         VERSION ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR})
 
-find_library(LIBDC_ERROR dc_error REQUIRED)
-
-target_link_libraries(dc_env PUBLIC ${LIBDC_ERROR})
-
 get_property(LIB64 GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS)
 
 if ("${LIB64}" STREQUAL "TRUE")
@@ -199,6 +195,9 @@ if ("${LIB64}" STREQUAL "TRUE")
 else()
     set(LIBSUFFIX "")
 endif()
+
+find_library(LIBDC_ERROR dc_error REQUIRED)
+target_link_libraries(dc_env PUBLIC ${LIBDC_ERROR})
 
 set(INSTALL_LIB_DIR lib${LIBSUFFIX} CACHE PATH "Installation directory for libraries")
 mark_as_advanced(INSTALL_LIB_DIR)
