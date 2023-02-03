@@ -18,6 +18,7 @@
 #include "dc_env/env.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 
 static void dc_env_init(struct dc_env *env, bool zero_free, dc_env_tracer tracer);
@@ -107,7 +108,7 @@ void dc_env_default_tracer(const struct dc_env *env,
                              const char *function_name,
                              size_t line_number)
 {
-    fprintf(stdout, "TRACE: %s : %s : @ %zu\n", file_name, function_name, line_number); // NOLINT(cert-err33-c)
+    fprintf(stdout, "TRACE (pid=%d): %s : %s : @ %zu\n", getpid(), file_name, function_name, line_number); // NOLINT(cert-err33-c)
 }
 #pragma GCC diagnostic pop
 
